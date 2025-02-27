@@ -1,0 +1,64 @@
+greeting:
+  message: "hello"
+  another: "You are beautiful"
+
+external-api:
+  url: "http//bmw.external.com"
+quarkus:
+  rest-client:
+    external-api:
+      url:
+        ${external-api.url}
+  http:
+    port: 8081
+    cors:
+      ~: true
+      origins:
+        - http://localhost:4200
+      headers:
+        - accept
+        - authorization
+        - content-type
+      methods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+  datasource:
+    db-kind: postgresql
+    devservices:
+      enabled: true
+      reuse: false
+      image-name: "postgres:14.10-alpine"
+      container-env:
+        "POSTGRES_DB": "fs_academy"
+        "POSTGRES_USER": "postgres"
+        "PASSWORD": "postgres"
+      port: 5432
+      volumes:
+        "db/init-db": "/docker-entrypoint-initdb.d"
+      db-name: "fs_academy"
+      username: "postgres"
+      password: "postgres"
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/fs_academy
+      initial-size: 2
+      min-size: 2
+      max-size: 5
+  liquibase:
+    migrate-at-start: true
+    search-path:
+      - "db"
+    change-log: "db/changeLog.xml"
+  hibernate-orm:
+    packages: com.ctw.workstation
+    validate-in-dev-mode: false
+    database:
+      generation: none
+    log:
+      sql: ${hibernate_orm_log_sql:false}
+  log:
+    min-level: INFO
+    level: INFO
+    console:
+        json: false
