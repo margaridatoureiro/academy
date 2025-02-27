@@ -1,0 +1,14 @@
+name: Build Docker Image
+description: "Build a Docker image and check it was created"
+
+runs:
+  using: composite
+  steps:
+
+    - name: Build docker image
+      run: docker build . --file src/main/docker/Dockerfile.jvm --tag academy:$(date +%s)
+      shell: bash
+
+    - name: Check if image was created
+      run: docker images | grep academy
+      shell: bash
