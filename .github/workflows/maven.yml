@@ -19,3 +19,7 @@ jobs:
         path_dockerfile: src/main/docker/Dockerfile.jvm
         image_name: academy
         tag_name: v1
+    - uses: margaridatoureiro/academy/.github/actions/docker_hub@main
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}

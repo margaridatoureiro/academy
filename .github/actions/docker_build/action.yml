@@ -21,10 +21,14 @@ runs:
         fi
       shell: bash
 
-    - name: Build docker image
-      run: docker build . --file ${{inputs.path_dockerfile}} --tag ${{inputs.image_name}}:${{env.TAG}}
+    - name: Define Image Name
+      run: echo "DOCKER_IMAGE_NAME=${{inputs.image_name}}:${{inputs.tag_name}}" >> $GITHUB_ENV
       shell: bash
 
-    - name: Check if image was created
+    - name: Build Docker Image
+      run: docker build . --file ${{inputs.path_dockerfile}} --tag ${{env.DOCKER_IMAGE_NAME}}
+      shell: bash
+
+    - name: Verify Docker Image
       run: docker images | grep ${{inputs.image_name}}
       shell: bash
