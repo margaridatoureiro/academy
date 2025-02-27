@@ -17,7 +17,7 @@ jobs:
     - uses: margaridatoureiro/academy/.github/actions/docker_build@main
       with:
         path_dockerfile: src/main/docker/Dockerfile.jvm
-        image_name: academy
+        image_name: ${{ vars.DOCKERHUB_USERNAME }}/academy
         tag_name: v1
     - uses: margaridatoureiro/academy/.github/actions/docker_hub@main
       with:
