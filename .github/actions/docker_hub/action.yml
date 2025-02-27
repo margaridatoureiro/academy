@@ -16,5 +16,5 @@ runs:
         password: ${{ inputs.dockerhub_token }}
 
     - name: Push image to Docker Hub
-      run: docker push ${{ inputs.dockerhub_username }}/${{env.DOCKER_IMAGE_NAME}}
+      run: docker push ${{env.DOCKER_IMAGE_NAME}}:${{env.TAG}}
       shell: bash
